@@ -1,3 +1,10 @@
+//go:build mockaws
+// +build mockaws
+
+// NOTE: We use build tags to differentiate mockaws testing because this uses
+// a local mock AWS service
+// (https://docs.getmoto.org/en/latest/docs/server_mode.html)
+
 package test
 
 import (
