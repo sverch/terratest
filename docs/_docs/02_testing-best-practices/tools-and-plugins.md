@@ -22,7 +22,7 @@ This page contains a list of tools and plugins for Terratest to make integration
 
 The Terratest Maven Plugin aims to bring Terratest to the JVM world. Create your Go based tests beside your Java code with Maven and run them together. You can export the results into Json or an HTML page. As the plugin is MIT licensed, it is easy and painless to integrate into any Java+Maven combination. To learn more check out the website: [Terratest Maven Plugin](https://terratest-maven-plugin.github.io) and the [GitHub repository](https://github.com/terratest-maven-plugin/terratest-maven-plugin)
 
-### Moto Standalone AWS Server
+### Custom AWS Endpoints
 
 Terratest can be used with a custom AWS endpoint. One of the use cases for this is testing your automation using a mock AWS server such as [Moto in standalone server mode](https://docs.getmoto.org/en/latest/docs/getting_started.html#stand-alone-server-mode). This allows you to test your AWS based automation without an AWS account.
 
