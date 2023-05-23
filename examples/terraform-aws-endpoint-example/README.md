@@ -1,4 +1,4 @@
-# Terraform AWS S3 Example
+# Terraform AWS Endpoint Example
 
 This folder contains a simple Terraform module to demonstrate using custom
 endpoints. It's deploying some AWS resources to `http://localhost:5000`, which
