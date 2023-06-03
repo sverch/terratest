@@ -434,7 +434,8 @@ workflows:
 
       - mock_aws_test:
           context:
-            - Gruntwork Admin
+            - AWS__PHXDEVOPS__circle-ci-test
+            - GITHUB__PAT__gruntwork-ci
           requires:
             - setup
           filters:
