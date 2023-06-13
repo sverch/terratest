@@ -343,6 +343,7 @@ jobs:
       - run:
           name: run mock aws server
           command: |
+            mkdir -p /tmp/logs
             moto_server | tee /tmp/logs/moto_server_output.log
           background: true
       - run:
