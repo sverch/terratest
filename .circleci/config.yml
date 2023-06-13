@@ -349,7 +349,10 @@ jobs:
       - run:
           name: wait for mock aws server
           command: |
-            while ! AWS_REGION=us-west-2 AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy aws --endpoint http://localhost:5000 sts get-caller-identity; do
+            # Disable AWS_PAGER because the CI system isn't an
+            # interactive terminal, and will throw warnings otherwise:
+            # https://stackoverflow.com/questions/60122188/how-to-turn-off-the-pager-for-aws-cli-return-value
+            while ! AWS_PAGER="" AWS_REGION=us-west-2 AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy aws --endpoint http://localhost:5000 sts get-caller-identity; do
               echo "Waiting for local mock AWS server"
               sleep 1
             done
