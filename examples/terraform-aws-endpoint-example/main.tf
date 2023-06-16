@@ -8,8 +8,10 @@ provider "aws" {
   secret_key = "dummy"
 
   endpoints {
-    sts = "http://localhost:5000"
-    s3  = "http://localhost:5000"
+    # We use 127.0.0.1 instead of localhost because otherwise circleci
+    # will do a DNS lookup for "localhost" and fail.
+    sts = "http://127.0.0.1:5000"
+    s3  = "http://127.0.0.1:5000"
   }
 }
 
