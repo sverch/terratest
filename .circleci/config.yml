@@ -52,8 +52,10 @@ jobs:
             done
       - run:
           command: |
+            ls .
+            env
             mkdir -p /tmp/logs
-            go test -v test/terraform_aws_endpoint_example_test.go
+            go test -v ./test/terraform_aws_endpoint_example_test.go
 
       # Store test result and log artifacts for browsing purposes
       - store_artifacts:
