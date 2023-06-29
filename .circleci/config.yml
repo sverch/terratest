@@ -49,6 +49,7 @@ jobs:
             done
       - run:
           command: |
+            find /home
             ls .
             env
             mkdir -p /tmp/logs
