@@ -23,6 +23,12 @@ jobs:
             sudo ln -s /usr/local/go/bin/go /usr/bin/go
             echo "The installed version of Go is now $(go version)"
       - run:
+          name: Install Terraform
+          command: |
+            curl -LO https://releases.hashicorp.com/terraform/0.15.4/terraform_0.15.4_linux_amd64.zip
+            unzip terraform_0.15.4_linux_amd64.zip
+            sudo mv terraform /usr/local/bin/
+      - run:
           name: install mock aws server
           command: |
             pip install moto[server]
