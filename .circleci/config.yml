@@ -4,9 +4,6 @@ jobs:
     docker:
       - image: cimg/python:3.10.2
     steps:
-      - attach_workspace:
-          at: /home/circleci
-
       # The weird way you have to set PATH in Circle 2.0
       - run: |
           echo 'export PATH=$HOME/.local/bin:$HOME/terraform:$HOME/packer:$PATH' >> $BASH_ENV
