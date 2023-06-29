@@ -26,6 +26,19 @@ func TestTerraformAwsEndpointExample(t *testing.T) {
 	t.Setenv("AWS_ACCESS_KEY_ID", "dummy")
 	t.Setenv("AWS_SECRET_ACCESS_KEY", "dummy")
 
+	// By default, the golang client will interact with s3 in a way that
+	// uses subdomains to specify information about the bucket. If you have
+	// issues with subdomains of "localhost" not resolving properly, set
+	// this to "1" to tell terratest to use url paths rather than
+	// subdomains for this information.
+	// See:
+	// https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#path-style-access
+	//
+	// Note that AWS is discouraging path style endpoints in the future, so
+	// the default is not to use them, see:
+	// https://aws.amazon.com/blogs/aws/amazon-s3-path-deprecation-plan-the-rest-of-the-story/
+	t.Setenv("TERRATEST_AWS_S3_USE_PATH_STYLE_ENDPOINT", "1")
+
 	// Give this S3 Bucket a unique ID for a name tag so we can distinguish it from any other Buckets provisioned
 	// in your AWS account
 	expectedName := fmt.Sprintf("terratest-aws-endpoint-example-%s", strings.ToLower(random.UniqueId()))
