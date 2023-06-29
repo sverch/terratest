@@ -17,6 +17,7 @@ import (
 const (
 	AuthAssumeRoleEnvVar = "TERRATEST_IAM_ROLE"            // OS environment variable name through which Assume Role ARN may be passed for authentication
 	CustomEndpointEnvVar = "TERRATEST_CUSTOM_AWS_ENDPOINT" // Custom endpoint to use as aws service
+	S3PathStyleEnvVar = "TERRATEST_AWS_S3_USE_PATH_STYLE_ENDPOINT" // Whether to use "path style" s3 endpoints
 )
 
 // NewAuthenticatedSession creates an AWS session following to standard AWS authentication workflow.
@@ -36,7 +37,10 @@ func NewAuthenticatedSessionFromDefaultCredentials(region string) (*session.Sess
 	if customEndpoint, ok := os.LookupEnv(CustomEndpointEnvVar); ok {
 		awsConfig.WithEndpoint(customEndpoint)
 	}
-	awsConfig.WithEndpoint(os.Getenv(CustomEndpointEnvVar))
+
+	if useS3PathStyle, ok := os.LookupEnv(S3PathStyleEnvVar); ok {
+		awsConfig.WithS3ForcePathStyle(useS3PathStyle == "1")
+	}
 
 	sessionOptions := session.Options{
 		Config:            *awsConfig,
@@ -80,6 +84,10 @@ func CreateAwsSessionFromRole(region string, roleARN string) (*session.Session, 
 		awsConfig.WithEndpoint(customEndpoint)
 	}
 
+	if useS3PathStyle, ok := os.LookupEnv(S3PathStyleEnvVar); ok {
+		awsConfig.WithS3ForcePathStyle(useS3PathStyle == "1")
+	}
+
 	sess, err := session.NewSession(awsConfig)
 	if err != nil {
 		return nil, err
@@ -102,6 +110,10 @@ func CreateAwsSessionWithCreds(region string, accessKeyID string, secretAccessKe
 
 	if customEndpoint, ok := os.LookupEnv(CustomEndpointEnvVar); ok {
 		awsConfig.WithEndpoint(customEndpoint)
+	}
+
+	if useS3PathStyle, ok := os.LookupEnv(S3PathStyleEnvVar); ok {
+		awsConfig.WithS3ForcePathStyle(useS3PathStyle == "1")
 	}
 
 	awsConfig.WithCredentials(CreateAwsCredentials(accessKeyID, secretAccessKey))
@@ -132,6 +144,10 @@ func CreateAwsSessionWithMfa(region string, stsClient *sts.STS, mfaDevice *iam.V
 
 	if customEndpoint, ok := os.LookupEnv(CustomEndpointEnvVar); ok {
 		awsConfig.WithEndpoint(customEndpoint)
+	}
+
+	if useS3PathStyle, ok := os.LookupEnv(S3PathStyleEnvVar); ok {
+		awsConfig.WithS3ForcePathStyle(useS3PathStyle == "1")
 	}
 
 	awsConfig.WithCredentials(CreateAwsCredentialsWithSessionToken(accessKeyID, secretAccessKey, sessionToken))

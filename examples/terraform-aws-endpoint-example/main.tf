@@ -7,6 +7,13 @@ provider "aws" {
   access_key = "dummy"
   secret_key = "dummy"
 
+  # By default, terraform will interact with s3 in a way that uses subdomains
+  # to specify information about the bucket. If you have issues with subdomains
+  # of "localhost" not resolving properly, set this to true to tell terraform
+  # to use url paths rather than subdomains for this information.
+  # See: https://registry.terraform.io/providers/hashicorp/aws/latest/docs#s3_use_path_style
+  s3_use_path_style = "true"
+
   endpoints {
     sts = "http://localhost:5000"
     s3  = "http://localhost:5000"
