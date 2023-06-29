@@ -49,6 +49,8 @@ jobs:
               sleep 1
             done
       - run:
+          environment:
+            AWS_S3_USE_PATH_STYLE_ENDPOINT: 1
           command: |
             find /home
             ls .
