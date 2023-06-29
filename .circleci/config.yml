@@ -10,6 +10,18 @@ jobs:
       # The weird way you have to set PATH in Circle 2.0
       - run: |
           echo 'export PATH=$HOME/.local/bin:$HOME/terraform:$HOME/packer:$PATH' >> $BASH_ENV
+
+      - run:
+          name: install golang
+          env:
+            GO_VERSION: 1.19
+          command: |
+            echo "Installing Go version $GO_VERSION"
+            curl -O --silent --location --fail --show-error "https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz"
+            sudo rm -rf /usr/local/go
+            sudo tar -C /usr/local -xzf "go${GO_VERSION}.linux-amd64.tar.gz"
+            sudo ln -s /usr/local/go/bin/go /usr/bin/go
+            echo "The installed version of Go is now $(go version)"
       - run:
           name: install mock aws server
           command: |
